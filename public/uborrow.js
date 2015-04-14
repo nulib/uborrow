@@ -1,10 +1,10 @@
 (function(jQ) {
   jQ(document).ready(function() {
 
-    var locationFilter = jQ('head').data('uborrow-filter');
+    var locationFilter = jQ('#uborrow-shim').data('uborrow-filter');
     
     function findScriptHost(extra) {
-      var scriptHost = jQ('head').data('uborrow-proxy');
+      var scriptHost = jQ('#uborrow-shim').data('uborrow-proxy');
       return scriptHost + extra;
     }
     
