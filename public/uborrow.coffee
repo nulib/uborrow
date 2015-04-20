@@ -20,7 +20,7 @@ class UBorrow
         processData: false
         dataType: 'json'
         global: false
-      .always (response, status) =>
+      .done (response, status) =>
         @displayResults(response)
     else
       console.log('Item is available. No FindItem check necessary.')

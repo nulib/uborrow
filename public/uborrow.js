@@ -36,7 +36,7 @@
           processData: false,
           dataType: 'json',
           global: false
-        }).always(function(response, status) {
+        }).done(function(response, status) {
           return _this.displayResults(response);
         });
       } else {
