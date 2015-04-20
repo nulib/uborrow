@@ -32,14 +32,7 @@
           type: 'POST',
           url: this.findScriptHost('dws/item/available'),
           contentType: 'application/json',
-          data: JSON.stringify({
-            "ExactSearch": [
-              {
-                "Type": "ISBN",
-                "Value": this.isbn
-              }
-            ]
-          }),
+          data: "{\"ExactSearch\": [{\"Type\": \"ISBN\", \"Value\": \"" + isbn + "\"}]}",
           processData: false,
           dataType: 'json',
           global: false
