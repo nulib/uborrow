@@ -19,7 +19,7 @@ module Uborrow
     helpers do
       def shim
         script_host = URI.parse(request.url).merge('/')
-        %{<script id="uborrow-shim" data-uborrow-proxy="#{script_host.to_s}" data-uborrow-filter="#{settings.availability_filter}" src="#{script_host.merge('uborrow.js').to_s}"></script>}
+        %{<div id="uborrow-shim" data-uborrow-proxy="#{script_host.to_s}" data-uborrow-filter="#{settings.availability_filter}"><script src="#{script_host.merge('uborrow.js').to_s}"></script></div>}
       end
     end
 

@@ -1,8 +1,6 @@
 function uB(jQ) { 
   jQ(document).ready(function() {
-    jQ('head').data('uborrow-proxy','http://uborrow.library.northwestern.edu/'); 
-    jQ('head').data('uborrow-filter',':not(:contains(Qatar))'); 
-    jQ('head').append('<script src="http://uborrow.library.northwestern.edu/uborrow.js" class="uborrow-proxy"></script>'); 
+    jQ('body').prepend('<div class="EXLCustomLayoutTile"><div id="uborrow-shim" data-uborrow-proxy="http://uborrow.dev/" data-uborrow-filter=":not(:contains(Qatar))"><script src="http://uborrow.dev/uborrow.js"></script></div></div>');
   });
 } 
 uB($)
