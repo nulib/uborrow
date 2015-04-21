@@ -1,3 +1,2 @@
-var content = $('<span> - <a/></span>')
-content.find('a').attr('href', '<%=@link.gsub(/'/,"\'")%>').attr('target','_blank').html('<%=@message.gsub(/'/,"\'")%>')
+var content = $('<a/>').attr('href', '<%=@link.gsub(/'/,"\'")%>').attr('target','_blank').html('<%=@message.gsub(/'/,"\'")%>')
 $('<%=@selector%>').uBorrow('update',content)

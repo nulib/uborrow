@@ -28,6 +28,7 @@
       var query;
       console.log("Initiating availability check for " + this.isbn);
       if (this.container.find(".EXLLocationInfo" + this.locationFilter + " .EXLResultStatusAvailable").length === 0) {
+        this.update('Checking ILL Status');
         console.log("Initiating uBorrow FindItem for " + this.isbn);
         query = $.param({
           tid: (new Date()).valueOf(),
@@ -40,7 +41,14 @@
     };
 
     UBorrow.prototype.update = function(content) {
-      return this.container.find(".EXLLocationInfo" + this.locationFilter + " .EXLResultStatusNotAvailable").first().append(content);
+      if (this.container.find('.EXLLocationInfo').length > 0) {
+        if (this.container.find('span.uBorrowDisplay').length === 0) {
+          this.container.find(".EXLLocationInfo" + this.locationFilter + " .EXLResultStatusNotAvailable").first().append('<span class="uBorrowDisplay"></span>');
+        }
+        if (content != null) {
+          return this.container.find('span.uBorrowDisplay').html(content).prepend(' - ');
+        }
+      }
     };
 
     UBorrow.prototype.checkIfReady = function() {

@@ -10,7 +10,8 @@ class UBorrow
 
   checkLocal: =>
     console.log("Initiating availability check for #{@isbn}")
-    if @container.find(".EXLLocationInfo#{@locationFilter} .EXLResultStatusAvailable").length == 0
+    if @container.find(".EXLLocationInfo#{@locationFilter} .EXLResultStatusAvailable").length == 0      
+      @update('Checking ILL Status')
       console.log("Initiating uBorrow FindItem for #{@isbn}")
       query = $.param
         tid: (new Date()).valueOf()
@@ -20,14 +21,18 @@ class UBorrow
       console.log('Item is available. No FindItem check necessary.')
       
   update: (content) =>
-    @container.find(".EXLLocationInfo#{@locationFilter} .EXLResultStatusNotAvailable").first().append(content);
-    
+    if @container.find('.EXLLocationInfo').length > 0
+      if @container.find('span.uBorrowDisplay').length == 0
+        @container.find(".EXLLocationInfo#{@locationFilter} .EXLResultStatusNotAvailable").first().append('<span class="uBorrowDisplay"></span>')
+      if content?
+        @container.find('span.uBorrowDisplay').html(content).prepend(' - ')
+
   checkIfReady: =>
     if @container.find('.EXLLocationInfo').length > 0
       @checkLocal()
     else
       setTimeout(@checkIfReady, 500)
-
+      
 $.fn.uBorrow = (args...) -> 
   [command, payload] = args
   switch command
