@@ -21,27 +21,23 @@ module Uborrow
         script_host = URI.parse(request.url).merge('/')
         %{<div id="uborrow-shim" data-uborrow-proxy="#{script_host.to_s}" data-uborrow-filter="#{settings.availability_filter}"><script src="#{script_host.merge('uborrow.js').to_s}"></script></div>}
       end
+      
+      def relais(path, payload)
+        RestClient.post "https://rc.relais-host.com/#{path}", payload.merge(settings.required_fields).to_json, content_type: 'application/json'
+      end
     end
 
     get '/uborrow.html' do
       shim
     end
-    
-    options '/*' do
-      response_headers = {
-        'Content-Type' => 'text/html; charset-utf-8',
-        'Access-Control-Allow-Origin'  => request.env['HTTP_ORIGIN'],
-        'Access-Control-Allow-Methods' => request.env['HTTP_ACCESS_CONTROL_REQUEST_METHOD'],
-        'Access-Control-Allow-Headers' => request.env['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']
-      }.reject { |k,v| v.nil? }
-      [200,response_headers,'']
-    end
 
-    post '/*' do
-      payload = JSON.parse(request.body.read).merge(settings.required_fields)
-      path = params[:splat].join('')
-      response = RestClient.post "https://rc.relais-host.com/#{path}", payload.to_json, content_type: 'application/json'
-      [200,{'Access-Control-Allow-Origin'=>'*'},response]
+    get '/findItem/:type/:value' do
+      payload = {"ExactSearch" => [{"Type" => params[:type], "Value" => params[:value].to_s}]}
+      response = JSON.parse(relais('/dws/item/available',payload))
+      @link = response['Item']['RequestLink']['ButtonLink']
+      @message = response['Item']['RequestLink']['RequestMessage']
+      @selector = params[:target].to_s.empty? ? '.EXLResult' : "##{params[:target]}"
+      erb :find_item, content_type: 'text/javascript'
     end
   end
 end
