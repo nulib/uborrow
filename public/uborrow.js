@@ -15,7 +15,7 @@
       this.findScriptHost = __bind(this.findScriptHost, this);
       this.jQ(this.container).data('uborrow', this);
       this.locationFilter = this.jQ('#uborrow-shim').data('uborrow-filter');
-      boomTabUrl = this.jQ(this.container).find('.EXLTabsRibbon .EXLLocationsTab .EXLTabBoomId').val();
+      boomTabUrl = this.jQ(this.container).find('.EXLTabsRibbon .EXLTabBoomId').val();
       match = (boomTabUrl != null) && boomTabUrl.match(/rft\.isbn=([0-9X]+)/);
       this.isbn = (match != null) && match[1];
     }

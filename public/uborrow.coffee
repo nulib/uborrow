@@ -2,7 +2,7 @@ class UBorrow
   constructor: (@jQ, @container) ->
     @jQ(@container).data('uborrow',@)
     @locationFilter = @jQ('#uborrow-shim').data('uborrow-filter')
-    boomTabUrl = @jQ(@container).find('.EXLTabsRibbon .EXLLocationsTab .EXLTabBoomId').val()
+    boomTabUrl = @jQ(@container).find('.EXLTabsRibbon .EXLTabBoomId').val()
     match = boomTabUrl? && boomTabUrl.match(/rft\.isbn=([0-9X]+)/)
     @isbn = match? && match[1]
 
