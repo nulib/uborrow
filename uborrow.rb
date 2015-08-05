@@ -23,7 +23,8 @@ module Uborrow
       end
       
       def relais(path, payload)
-        RestClient.post "https://rc.relais-host.com/#{path}", payload.merge(settings.required_fields).to_json, content_type: 'application/json'
+        RestClient.log = Logger.new $stderr
+        RestClient.post "https://uborrow.relais-host.com/#{path}", payload.merge(settings.required_fields).to_json, content_type: 'application/json'
       end
     end
 
